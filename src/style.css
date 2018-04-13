@@ -18,21 +18,27 @@ body {
 }
 
 #editor {
+  display: inline-block;
   width: 50%;
   height: 100%;
-  font-size: 1rem;
-  display: inline-block;
-  border: 2px solid gray;
   outline: none;
   resize: none;
+  border: 2px solid gray;
+  font-size: 1rem;
 }
 
 #preview {
-  font-size: 1rem;
   display: inline-block;
   width: 50%;
   height: 100%;
-  overflow: auto;
   border: 2px solid gray;
   border-left: 0px;
+  overflow: auto;
+  font-size: 1rem;
+}
+
+#preview img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
