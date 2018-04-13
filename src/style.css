@@ -1,25 +1,27 @@
 html, body {
   margin: 0;
   padding: 0;
-  position: fixed;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  overflow-y: hidden;
   font-size: 16px;
 }
 
 body {
   font-size: 0;
+  background-color: var(--bg-color);
 }
 
 * {
   box-sizing: border-box;
 }
 
+:root {
+  --slider-width: 10px;
+}
+
 #editor {
   display: inline-block;
-  width: 50%;
+  width: calc(50% - var(--slider-width) / 2);
   height: 100%;
   padding: 5px;
   outline: none;
@@ -30,7 +32,7 @@ body {
 
 #preview {
   display: inline-block;
-  width: 50%;
+  width: calc(50% - var(--slider-width) / 2);
   height: 100%;
   padding: 5px;
   border: 2px solid gray;
@@ -39,39 +41,41 @@ body {
   font-size: 1rem;
 }
 
+#slider {
+  display: inline-block;
+  width: var(--slider-width);
+  height: 100%;
+  background-color: #557582;
+}
+
 #preview img {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-@media (max-width: 1300px) {
-  #editor{
+@media screen and (orientation: portrait) {
+  #editor, #preview, #slider {
     display: block;
-    width: 1024px;
-    height: 50%;
-    margin: 0 auto;
+    width: 100%;
+    height: calc(50% - var(--slider-width) / 2);
   }
   #preview {
-    display: block;
-    width: 1024px;
-    height: 50%;
-    margin: 0 auto;
     border-left: 2px solid gray;
     border-top: 0;
   }
-}
-
-@media (max-width: 1024px) {
-  #editor {
-    width: 100%;
-  }
-  #preview {
-    width: 100%;
+  #slider {
+    height: var(--slider-width);
   }
 }
 
-@media (max-width: 725px) {
+@media (orientation: portrait) and (max-width: 730px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (orientation: landscape) and (max-width: 1450px) {
   html {
     font-size: 12px;
   }
