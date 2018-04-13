@@ -16,7 +16,6 @@ renderer.link = (href, title, text) =>
 const markdownOptions = {
   headerIds: false,
   gfm: true,
-  baseUrl: 0,
   breaks: true,
   renderer,
 };
