@@ -32,34 +32,58 @@ function displayExample() {
 }
 
 function keepRatio() {
-  console.log('resize');
+  const landscape = window.matchMedia('(orientation: landscape)').matches;
+  if (landscape) {
+    document.documentElement.style.setProperty('--slider-width', '10px');
+    document.documentElement.style.setProperty('--slider-height', '100%');
+    document.documentElement.style.setProperty('--editor-width', '50%');
+    document.documentElement.style.setProperty('--editor-height', '100%');
+    document.documentElement.style.setProperty('--preview-width', '50%');
+    document.documentElement.style.setProperty('--preview-height', '100%');
+  } else {
+    document.documentElement.style.setProperty('--slider-width', '100%');
+    document.documentElement.style.setProperty('--slider-height', '10px');
+    document.documentElement.style.setProperty('--editor-width', '100%');
+    document.documentElement.style.setProperty('--editor-height', '50%');
+    document.documentElement.style.setProperty('--preview-width', '100%');
+    document.documentElement.style.setProperty('--preview-height', '50%');
+  }
 }
 
 let clicked = false;
+let startX;
+let startY;
 
-function slideStarted() {
+function slideStarted(e) {
   clicked = true;
+  startX = e.clientX;
+  startY = e.clientY;
 }
 
 function slideEnded() {
   clicked = false;
 }
 
-function changeRatio(e) {
-  function resize(shift) {
-    const shiftAbs = Math.abs(shift);
-    if (shift < 0) {
-      editor.style.width = `calc(100% - ${preview.offsetWidth}px - ${slider.offsetWidth}px - ${shiftAbs}%)`;
-      preview.style.width = `calc(100% - ${editor.offsetWidth}px - ${slider.offsetWidth}px)`;
-    } else {
-      preview.style.width = `calc(100% - ${editor.offsetWidth}px - ${slider.offsetWidth}px - ${shiftAbs}%)`;
-      editor.style.width = `calc(100% - ${preview.offsetWidth}px - ${slider.offsetWidth}px)`;
-    }
+function resize(shiftX, shiftY) {
+  const landscape = window.matchMedia('(orientation: landscape)').matches;
+  if (landscape) {
+    const width = window.getComputedStyle(document.documentElement).getPropertyValue('--editor-width');
+    const newWidth = `${parseFloat(width) + shiftX}%`;
+    document.documentElement.style.setProperty('--editor-width', newWidth);
+  } else {
+    const height = window.getComputedStyle(document.documentElement).getPropertyValue('--editor-height');
+    const newHeight = `${parseFloat(height) + shiftY}%`;
+    document.documentElement.style.setProperty('--editor-height', newHeight);
   }
+}
 
+function changeRatio(e) {
   if (clicked) {
-    const shift = ((e.clientX - slider.offsetLeft) / document.body.offsetWidth) * 100;
-    resize(shift);
+    const shiftX = ((e.clientX - startX) / document.body.offsetWidth) * 100;
+    const shiftY = ((e.clientY - startY) / document.body.offsetHeight) * 100;
+    resize(shiftX, shiftY);
+    startX = e.clientX;
+    startY = e.clientY;
   }
 }
 
@@ -71,7 +95,7 @@ editor.focus();
 editor.addEventListener('keyup', previewMarkdown);
 window.addEventListener('load', displayExample);
 window.addEventListener('resize', keepRatio);
-slider.addEventListener('mousedown', slideStarted);
+slider.addEventListener('mousedown', e => slideStarted(e));
 window.addEventListener('mouseup', slideEnded);
 window.addEventListener('mousemove', e => changeRatio(e));
 window.addEventListener('selectstart', e => textSelection(e));
