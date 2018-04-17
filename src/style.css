@@ -17,12 +17,17 @@ body {
 
 :root {
   --slider-width: 10px;
+  --editor-width: 50%;
+  --preview-width: 50%;
+  --slider-height: 100%;
+  --editor-height: 100%;
+  --preview-height: 100%;
 }
 
 #editor {
   display: inline-block;
-  width: calc(50% - var(--slider-width) / 2);
-  height: 100%;
+  width: calc(var(--editor-width));
+  height: var(--editor-height);
   padding: 5px;
   outline: none;
   resize: none;
@@ -32,8 +37,8 @@ body {
 
 #preview {
   display: inline-block;
-  width: calc(50% - var(--slider-width) / 2);
-  height: 100%;
+  width: calc(100% - var(--editor-width) - var(--slider-width));
+  height: var(--preview-height);
   padding: 5px;
   border: 2px solid gray;
   border-left: 0px;
@@ -44,7 +49,7 @@ body {
 #slider {
   display: inline-block;
   width: var(--slider-width);
-  height: 100%;
+  height: var(--slider-height);
   background-color: #557582;
 }
 
@@ -55,17 +60,31 @@ body {
 }
 
 @media screen and (orientation: portrait) {
+  :root {
+    --slider-width: 100%;
+    --editor-width: 100%;
+    --preview-width: 100%;
+    --slider-height: 10px;
+    --editor-height: 50%;
+    --preview-height: 50%;
+  }
+
   #editor, #preview, #slider {
     display: block;
-    width: 100%;
-    height: calc(50% - var(--slider-width) / 2);
+  }
+  #editor {
+    width: var(--editor-width);
+    height: calc(var(--editor-height));
   }
   #preview {
+    width: var(--preview-width);
+    height: calc(100% - var(--editor-height) - var(--slider-height));
     border-left: 2px solid gray;
     border-top: 0;
   }
   #slider {
-    height: var(--slider-width);
+    width: var(--slider-width);
+    height: var(--slider-height);
   }
 }
 
