@@ -90,6 +90,9 @@ body {
     width: var(--slider-width);
     height: var(--slider-height);
   }
+  #slider:hover {
+    cursor: ns-resize;
+  }
 }
 
 @media (orientation: portrait) and (max-width: 730px) {

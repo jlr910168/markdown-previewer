@@ -55,8 +55,13 @@ function slideStarted(e) {
   clicked = true;
   startX = e.clientX;
   startY = e.clientY;
-  document.body.style.cursor = 'ew-resize';
-  editor.style.cursor = 'ew-resize';
+  if (landscape) {
+    document.body.style.cursor = 'ew-resize';
+    editor.style.cursor = 'ew-resize';
+  } else {
+    document.body.style.cursor = 'ns-resize';
+    editor.style.cursor = 'ns-resize';
+  }
 }
 
 function slideEnded() {
