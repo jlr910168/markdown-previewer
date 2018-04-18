@@ -31,21 +31,22 @@ function displayExample() {
   previewMarkdown();
 }
 
+let landscape = window.matchMedia('(orientation: landscape)').matches;
+let prevMode;
+if (landscape) prevMode = true;
+else prevMode = false;
 function keepRatio() {
-  const landscape = window.matchMedia('(orientation: landscape)').matches;
-  if (landscape) {
-    document.documentElement.style.setProperty('--slider-height', '100%');
-    document.documentElement.style.setProperty('--editor-width', '50%');
-    document.documentElement.style.setProperty('--editor-height', '100%');
-    document.documentElement.style.setProperty('--preview-width', '50%');
-    document.documentElement.style.setProperty('--preview-height', '100%');
-  } else {
-    document.documentElement.style.setProperty('--slider-width', '100%');
-    document.documentElement.style.setProperty('--editor-width', '100%');
-    document.documentElement.style.setProperty('--editor-height', '50%');
-    document.documentElement.style.setProperty('--preview-width', '100%');
-    document.documentElement.style.setProperty('--preview-height', '50%');
+  landscape = window.matchMedia('(orientation: landscape)').matches;
+  if (prevMode !== landscape) {
+    if (landscape) {
+      document.documentElement.style.setProperty('--editor-width', '50%');
+      document.documentElement.style.setProperty('--editor-height', '100%');
+    } else {
+      document.documentElement.style.setProperty('--editor-width', '100%');
+      document.documentElement.style.setProperty('--editor-height', '50%');
+    }
   }
+  prevMode = landscape;
 }
 
 let clicked = false;
