@@ -16,7 +16,7 @@ body {
 }
 
 :root {
-  --slider-width: 10px;
+  --slider-width: 15px;
   --editor-width: 50%;
   --preview-width: 50%;
   --slider-height: 100%;
@@ -51,6 +51,10 @@ body {
   width: var(--slider-width);
   height: var(--slider-height);
   background-color: #557582;
+}
+
+#slider:hover {
+  cursor: ew-resize;
 }
 
 #preview img {

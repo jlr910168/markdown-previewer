@@ -34,7 +34,6 @@ function displayExample() {
 function keepRatio() {
   const landscape = window.matchMedia('(orientation: landscape)').matches;
   if (landscape) {
-    document.documentElement.style.setProperty('--slider-width', '10px');
     document.documentElement.style.setProperty('--slider-height', '100%');
     document.documentElement.style.setProperty('--editor-width', '50%');
     document.documentElement.style.setProperty('--editor-height', '100%');
@@ -42,7 +41,6 @@ function keepRatio() {
     document.documentElement.style.setProperty('--preview-height', '100%');
   } else {
     document.documentElement.style.setProperty('--slider-width', '100%');
-    document.documentElement.style.setProperty('--slider-height', '10px');
     document.documentElement.style.setProperty('--editor-width', '100%');
     document.documentElement.style.setProperty('--editor-height', '50%');
     document.documentElement.style.setProperty('--preview-width', '100%');
@@ -58,10 +56,14 @@ function slideStarted(e) {
   clicked = true;
   startX = e.clientX;
   startY = e.clientY;
+  document.body.style.cursor = 'ew-resize';
+  editor.style.cursor = 'ew-resize';
 }
 
 function slideEnded() {
   clicked = false;
+  document.body.style.cursor = 'auto';
+  editor.style.cursor = 'auto';
 }
 
 function resize(shiftX, shiftY) {
@@ -94,6 +96,7 @@ function textSelection(e) {
 editor.focus();
 editor.addEventListener('keyup', previewMarkdown);
 window.addEventListener('load', displayExample);
+
 window.addEventListener('resize', keepRatio);
 slider.addEventListener('mousedown', e => slideStarted(e));
 window.addEventListener('mouseup', slideEnded);
