@@ -32,21 +32,19 @@ function displayExample() {
 }
 
 let landscape = window.matchMedia('(orientation: landscape)').matches;
-let prevMode;
-if (landscape) prevMode = true;
-else prevMode = false;
+let prevMode = landscape;
+let prevWidth;
+let prevHeight;
+
 function keepRatio() {
   landscape = window.matchMedia('(orientation: landscape)').matches;
   if (prevMode !== landscape) {
-    if (landscape) {
-      document.documentElement.style.setProperty('--editor-width', '50%');
-      document.documentElement.style.setProperty('--editor-height', '100%');
-    } else {
-      document.documentElement.style.setProperty('--editor-width', '100%');
-      document.documentElement.style.setProperty('--editor-height', '50%');
-    }
+    document.documentElement.style.setProperty('--editor-width', prevHeight);
+    document.documentElement.style.setProperty('--editor-height', prevWidth);
   }
   prevMode = landscape;
+  prevWidth = getComputedStyle(document.documentElement).getPropertyValue('--editor-width');
+  prevHeight = getComputedStyle(document.documentElement).getPropertyValue('--editor-height');
 }
 
 let clicked = false;
@@ -68,7 +66,7 @@ function slideEnded() {
 }
 
 function resize(shiftX, shiftY) {
-  const landscape = window.matchMedia('(orientation: landscape)').matches;
+  landscape = window.matchMedia('(orientation: landscape)').matches;
   if (landscape) {
     const width = window.getComputedStyle(document.documentElement).getPropertyValue('--editor-width');
     const newWidth = `${parseFloat(width) + shiftX}%`;
