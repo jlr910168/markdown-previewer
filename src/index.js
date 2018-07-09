@@ -33,8 +33,8 @@ function displayExample() {
 
 let landscape = window.matchMedia('(orientation: landscape)').matches;
 let prevMode = landscape;
-let prevWidth;
-let prevHeight;
+let prevWidth = getComputedStyle(document.documentElement).getPropertyValue('--editor-width');
+let prevHeight = getComputedStyle(document.documentElement).getPropertyValue('--editor-height');
 
 function keepRatio() {
   landscape = window.matchMedia('(orientation: landscape)').matches;
